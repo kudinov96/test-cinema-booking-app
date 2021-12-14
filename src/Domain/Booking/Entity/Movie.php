@@ -2,10 +2,10 @@
 
 namespace App\Domain\Booking\Entity;
 
-use App\Domain\Booking\Collection\SessionCollection;
 use App\Domain\Booking\Repository\MovieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Domain\Booking\Collection\SessionCollection;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Ramsey\Uuid\UuidInterface;
 use DateInterval;
@@ -42,7 +42,7 @@ class Movie
 
     public function __construct()
     {
-        $this->sessions = new ArrayCollection();
+        $this->sessions = new SessionCollection();
     }
 
     public function getId(): UuidInterface
@@ -50,9 +50,9 @@ class Movie
         return $this->id;
     }
 
-    public function getSessions(): array
+    public function getSessions(): Collection
     {
-        return $this->sessions->getArrayCopy();
+        return $this->sessions;
     }
 
     public function getName(): string

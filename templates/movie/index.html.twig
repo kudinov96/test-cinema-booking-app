@@ -6,7 +6,7 @@
             <div class="movie">
                 <div class="movie__id">{{ movie.getId() }}</div>
                 <div class="movie__title">{{ movie.getName() }}</div>
-                <div class="movie__duration">{#{{ movie.getDuration() }}#}</div>
+                <div class="movie__duration">Duration: {{ movie.getDuration().format('%H:%I') }}</div>
             </div>
         {% endfor %}
     </div>

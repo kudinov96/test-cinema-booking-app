@@ -58,6 +58,11 @@ class Session
         return $this->getDate();
     }
 
+    public function getSessionEnd(): DateTime
+    {
+        return $this->getDate()->add($this->movie->getDuration());
+    }
+
     public function setMovie(Movie $movie): self
     {
         $this->movie = $movie;

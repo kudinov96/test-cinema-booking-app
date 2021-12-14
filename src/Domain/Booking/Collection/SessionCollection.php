@@ -2,9 +2,9 @@
 
 namespace App\Domain\Booking\Collection;
 
-use ArrayIterator;
+use Doctrine\Common\Collections\ArrayCollection;
 
-class SessionCollection extends ArrayIterator
+class SessionCollection extends ArrayCollection
 {
 
 }
