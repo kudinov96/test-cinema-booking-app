@@ -43,11 +43,8 @@ class Movie
         return $this->name;
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function getDuration(): DateInterval
+    public function getDuration(): string
     {
-        return new DateInterval($this->duration);
+        return (new DateInterval($this->duration))->format('%H:%I');
     }
 }
