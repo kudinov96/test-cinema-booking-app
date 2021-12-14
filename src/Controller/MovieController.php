@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Domain\Booking\Entity\Movie;
+use App\Domain\Booking\Repository\MovieRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MoviesController extends AbstractController
+class MovieController extends AbstractController
 {
     #[Route('/', name: 'movies')]
     public function index(ManagerRegistry $doctrine): Response
@@ -18,15 +19,20 @@ class MoviesController extends AbstractController
 
         $movie = new Movie();
         $movie->uuid = Uuid::uuid4();
-        $movie->name = 'Test';
-        $movie->duration = '123';
+        $movie->name = 'Movie 2';
+        $movie->duration = 'PT1H30M';
         $entityManager->persist($movie);
         $entityManager->flush();*/
         /*return $this->json([
             'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/MoviesController.php',
-        ]);*/
+            'path' => 'src/Controller/MovieController.php',
+        ]);
+        */
 
-        return new Response('Movies');
+        $movies = (new MovieRepository($doctrine))->findAll();
+
+        return $this->render('movie/index.html.twig', [
+            'movies' => $movies
+        ]);
     }
 }
