@@ -23,22 +23,22 @@ class Movie
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class=UuidGenerator::class)
      */
-    public $id;
+    private $id;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Domain\Booking\Entity\Session", mappedBy="movie")
      */
-    public $sessions;
+    private $sessions;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    public $name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    public $duration;
+    private $duration;
 
     public function __construct()
     {

@@ -21,7 +21,7 @@ class Session
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class=UuidGenerator::class)
      */
-    public $id;
+    private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Booking\Entity\Movie", inversedBy="sessions")
@@ -31,12 +31,12 @@ class Session
     /**
      * @ORM\Column(type="integer")
      */
-    public $totalTickets;
+    private $totalTickets;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    public $date;
+    private $date;
 
     public function getId(): UuidInterface
     {
@@ -46,6 +46,11 @@ class Session
     public function getMovie(): ?Movie
     {
         return $this->movie;
+    }
+
+    public function getTotalTickets(): int
+    {
+        return $this->totalTickets;
     }
 
     public function getDate(): DateTime
