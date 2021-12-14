@@ -5,3 +5,7 @@
 .movie__title{
     font-weight: bold;
 }
+
+.movie__sessions > li{
+    margin-bottom: 10px;
+}
