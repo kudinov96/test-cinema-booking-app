@@ -4,9 +4,9 @@
     <div class="movies">
         {% for movie in movies %}
             <div class="movie">
-                <div class="movie__id">{{ movie.getUuid() }}</div>
+                <div class="movie__id">{{ movie.getId() }}</div>
                 <div class="movie__title">{{ movie.getName() }}</div>
-                <div class="movie__duration">{{ movie.getDuration() }}</div>
+                <div class="movie__duration">{#{{ movie.getDuration() }}#}</div>
             </div>
         {% endfor %}
     </div>
