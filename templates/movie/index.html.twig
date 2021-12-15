@@ -12,7 +12,7 @@
                         {% for session in movie.sessions %}
                             <li>
                                 {{ session.id }}<br>
-                                <i>Total tickets:</i> {{ session.totalTickets }}<br>
+                                <i>Total tickets:</i> {{ session.getAmountRemainingTickets() }}/{{ session.totalTickets }}<br>
                                 <i>Date:</i> {{ session.date.format('Y-m-d') }}<br>
                                 <i>Session time:</i> {{ session.getSessionStart().format('H:i') }} - {{ session.getSessionEnd().format('H:i') }}
                             </li>

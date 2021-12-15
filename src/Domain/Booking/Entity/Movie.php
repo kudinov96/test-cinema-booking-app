@@ -3,11 +3,12 @@
 namespace App\Domain\Booking\Entity;
 
 use App\Domain\Booking\Repository\MovieRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use App\Domain\Booking\Collection\SessionCollection;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
 use DateInterval;
 
 /**
@@ -40,8 +41,11 @@ class Movie
      */
     private $duration;
 
-    public function __construct()
+    public function __construct(string $name, string $duration)
     {
+        $this->id = Uuid::uuid4();
+        $this->name = $name;
+        $this->duration = $duration;
         $this->sessions = new SessionCollection();
     }
 

@@ -2,10 +2,13 @@
 
 namespace App\Domain\Booking\Entity;
 
+use App\Domain\Booking\Collection\TicketCollection;
 use App\Domain\Booking\Repository\SessionRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use DateTime;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -29,6 +32,11 @@ class Session
     private $movie;
 
     /**
+     * @ORM\OneToMany (targetEntity="App\Domain\Booking\Entity\Ticket", mappedBy="session")
+     */
+    private $tickets;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $totalTickets;
@@ -37,6 +45,15 @@ class Session
      * @ORM\Column(type="datetime")
      */
     private $date;
+
+    public function __construct(Movie $movie, int $totalTickets, DateTime $date)
+    {
+        $this->id = Uuid::uuid4();
+        $this->movie = $movie;
+        $this->totalTickets = $totalTickets;
+        $this->date = $date;
+        $this->tickets = new TicketCollection();
+    }
 
     public function getId(): UuidInterface
     {
@@ -48,9 +65,19 @@ class Session
         return $this->movie;
     }
 
+    public function getTickets(): Collection
+    {
+        return $this->tickets;
+    }
+
     public function getTotalTickets(): int
     {
         return $this->totalTickets;
+    }
+
+    public function getAmountRemainingTickets(): int
+    {
+        return $this->totalTickets - $this->tickets->count();
     }
 
     public function getDate(): DateTime
@@ -65,13 +92,6 @@ class Session
 
     public function getSessionEnd(): DateTime
     {
-        return $this->getDate()->add($this->movie->getDuration());
-    }
-
-    public function setMovie(Movie $movie): self
-    {
-        $this->movie = $movie;
-
-        return $this;
+        return $this->date->add($this->movie->getDuration());
     }
 }
