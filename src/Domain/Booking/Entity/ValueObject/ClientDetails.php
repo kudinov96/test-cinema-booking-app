@@ -3,7 +3,6 @@
 namespace App\Domain\Booking\Entity\ValueObject;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Domain\Booking\Entity\TransferObject\ClientDto;
 
 /**
  * @ORM\Embeddable
@@ -14,10 +13,20 @@ class ClientDetails
     private $name;
 
     /** @ORM\Column(type = "integer") */
-    private $phoneNumber;
+    private $phone_number;
 
-    public function __construct(ClientDto $clientDto) {
-        $this->name = $clientDto->name;
-        $this->phoneNumber = $clientDto->phoneNumber;
+    public function __construct(string $name, int $phone_number) {
+        $this->name = $name;
+        $this->phone_number = $phone_number;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getPhoneNumber(): int
+    {
+        return $this->phone_number;
     }
 }

@@ -39,18 +39,18 @@ class Session
     /**
      * @ORM\Column(type="integer")
      */
-    private $totalTickets;
+    private $total_tickets;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $date;
 
-    public function __construct(Movie $movie, int $totalTickets, DateTime $date)
+    public function __construct(Movie $movie, int $total_tickets, DateTime $date)
     {
         $this->id = Uuid::uuid4();
         $this->movie = $movie;
-        $this->totalTickets = $totalTickets;
+        $this->total_tickets = $total_tickets;
         $this->date = $date;
         $this->tickets = new TicketCollection();
     }
@@ -72,12 +72,12 @@ class Session
 
     public function getTotalTickets(): int
     {
-        return $this->totalTickets;
+        return $this->total_tickets;
     }
 
     public function getAmountRemainingTickets(): int
     {
-        return $this->totalTickets - $this->tickets->count();
+        return $this->total_tickets - $this->tickets->count();
     }
 
     public function getDate(): DateTime
