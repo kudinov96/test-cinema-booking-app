@@ -4,8 +4,6 @@ namespace App\Domain\Booking\Entity;
 
 use App\Domain\Booking\Entity\Session;
 use Doctrine\ORM\Mapping as ORM;
-use App\Domain\Booking\Repository\TicketRepository;
-use App\Domain\Booking\Entity\TransferObject\ClientDto;
 use App\Domain\Booking\Entity\ValueObject\ClientDetails;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Ramsey\Uuid\Uuid;
@@ -37,11 +35,11 @@ class Ticket
      */
     private $client;
 
-    public function __construct(Session $session, ClientDto $client)
+    public function __construct(Session $session, ClientDetails $client)
     {
         $this->id = Uuid::uuid4();
-        $this->client = new ClientDetails($client);
         $this->session = $session;
+        $this->client = $client;
     }
 
     public function getId(): UuidInterface

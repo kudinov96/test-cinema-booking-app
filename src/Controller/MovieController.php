@@ -2,20 +2,20 @@
 
 namespace App\Controller;
 
-use App\Domain\Booking\Entity\Movie;
-use App\Domain\Booking\Entity\Session;
-use App\Domain\Booking\Entity\Ticket;
-use App\Domain\Booking\Entity\TransferObject\ClientDto;
+use App\Domain\Booking\Command\Booking;
+use App\Domain\Booking\Entity\ValueObject\ClientDetails;
 use App\Domain\Booking\Repository\MovieRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Domain\Booking\Repository\SessionRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MovieController extends AbstractController
 {
     #[Route('/', name: 'movies')]
-    public function index(ManagerRegistry $doctrine, MovieRepository $movieRepository): Response
+    public function index(/*ManagerRegistry $doctrine, */MovieRepository $movieRepository): Response
     {
         /*
         $entityManager = $doctrine->getManager();
@@ -41,5 +41,19 @@ class MovieController extends AbstractController
         return $this->render('movie/index.html.twig', [
             'movies' => $movies
         ]);
+    }
+
+    /**
+     * @Route("/booking", name="booking", methods={"POST"})
+     */
+    public function actionBooking(MessageBusInterface $bus, Request $request): Response
+    {
+        $data = $request->request->all();
+        $client = new ClientDetails($data['name'], $data['phoneNumber']);
+        $sessionId = $data['sessionId'];
+
+        $bus->dispatch(new Booking($client, $sessionId));
+
+        return $this->redirectToRoute('movies');
     }
 }
