@@ -12,7 +12,7 @@
                         {% for session in movie.sessions %}
                             <li>
                                 {{ session.id }}<br>
-                                <i>Total tickets:</i> {{ session.getAmountRemainingTickets() }}/{{ session.getTotalTickets }}<br>
+                                <i>Remaining total tickets:</i> {{ session.getAmountRemainingTickets() }}/{{ session.getTotalTickets }}<br>
                                 <i>Date:</i> {{ session.date.format('Y-m-d') }}<br>
                                 <i>Session time:</i> {{ session.getSessionStart().format('H:i') }} - {{ session.getSessionEnd().format('H:i') }}
                                 {% if session.tickets is not empty %}
@@ -24,8 +24,8 @@
                                 {% endif %}
                                 <form action="{{ path('booking') }}" method="POST">
                                     <input type="hidden" name="session_id" value="{{ session.id }}">
-                                    <input type="text" name="name" placeholder="Name"><br>
-                                    <input type="text" name="phoneNumber" placeholder="Phone number"><br>
+                                    <input type="text" name="name" placeholder="Name" required><br>
+                                    <input type="text" name="phone_number" placeholder="Phone number" required><br>
                                     <button type="submit">Booking</button>
                                 </form>
                             </li>
