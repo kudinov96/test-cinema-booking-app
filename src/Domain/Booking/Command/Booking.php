@@ -2,15 +2,13 @@
 
 namespace App\Domain\Booking\Command;
 
-use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Entity\ValueObject\ClientDetails;
-use Ramsey\Uuid\UuidInterface;
 
 class Booking
 {
     public function __construct(
         private ClientDetails $client,
-        private string $sessionId,
+        private string $session_id,
     ) { }
 
     public function getClient(): ClientDetails
@@ -20,6 +18,6 @@ class Booking
 
     public function getSessionId(): string
     {
-        return $this->sessionId;
+        return $this->session_id;
     }
 }
