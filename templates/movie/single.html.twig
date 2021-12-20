@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="movie">
+        <div class="movie__id">{{ movie.id }}</div>
+        <div class="movie__title">{{ movie.name }}</div>
+        <div class="movie__duration">Duration: {{ movie.getDuration().format('%H:%I') }}</div>
+        {% if movie.sessions is not empty %}
+            <ul class="movie__sessions">
+                {% for key, session in movie.sessions %}
+                    <li>
+                        <a href="{{ path('single_session', {'movie_uuid': movie.id, 'session_uuid': session.id}) }}">Session {{ key + 1 }}</a><br>
+                        {{ session.id }}<br>
+                        <i>Remaining total tickets:</i> {{ session.getAmountRemainingTickets() }}/{{ session.getTotalTickets }}<br>
+                        <i>Date:</i> {{ session.date.format('Y-m-d') }}<br>
+                        <i>Session time:</i> {{ session.getSessionStart().format('H:i') }} - {{ session.getSessionEnd().format('H:i') }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}
