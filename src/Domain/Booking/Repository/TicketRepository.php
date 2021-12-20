@@ -21,12 +21,9 @@ class TicketRepository extends ServiceEntityRepository
         parent::__construct($registry, Ticket::class);
     }
 
-    public function save(Session $session, ClientDetails $client)
+    public function save(Ticket $ticket)
     {
         $entityManager = $this->getEntityManager();
-
-        $ticket = new Ticket($session, $client);
-
         $entityManager->persist($ticket);
         $entityManager->flush();
     }

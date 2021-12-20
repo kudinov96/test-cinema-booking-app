@@ -5,33 +5,8 @@
         {% for movie in movies %}
             <div class="movie">
                 <div class="movie__id">{{ movie.id }}</div>
-                <div class="movie__title">{{ movie.name }}</div>
+                <a href="{{ path('single_movie', {'uuid': movie.id}) }}" class="movie__title">{{ movie.name }}</a>
                 <div class="movie__duration">Duration: {{ movie.getDuration().format('%H:%I') }}</div>
-                {% if movie.sessions is not empty %}
-                    <ul class="movie__sessions">
-                        {% for session in movie.sessions %}
-                            <li>
-                                {{ session.id }}<br>
-                                <i>Remaining total tickets:</i> {{ session.getAmountRemainingTickets() }}/{{ session.getTotalTickets }}<br>
-                                <i>Date:</i> {{ session.date.format('Y-m-d') }}<br>
-                                <i>Session time:</i> {{ session.getSessionStart().format('H:i') }} - {{ session.getSessionEnd().format('H:i') }}
-                                {% if session.tickets is not empty %}
-                                    <ul>
-                                        {% for ticket in session.tickets %}
-                                            <li>{{ ticket.id }} | {{ ticket.client.name }} | {{ ticket.client.getPhoneNumber }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                                <form action="{{ path('booking') }}" method="POST">
-                                    <input type="hidden" name="session_id" value="{{ session.id }}">
-                                    <input type="text" name="name" placeholder="Name" required><br>
-                                    <input type="text" name="phone_number" placeholder="Phone number" required><br>
-                                    <button type="submit">Booking</button>
-                                </form>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
             </div>
         {% endfor %}
     </div>

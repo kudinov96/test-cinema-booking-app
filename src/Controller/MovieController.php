@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Domain\Booking\Command\Booking;
-use App\Domain\Booking\Entity\ValueObject\ClientDetails;
+use App\Domain\Booking\Command\BookingCommand;
 use App\Domain\Booking\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,25 +12,38 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MovieController extends AbstractController
 {
-    #[Route('/', name: 'movies')]
-    public function index(MovieRepository $movieRepository): Response
+    private MovieRepository $repository;
+
+    public function __construct(MovieRepository $repository)
     {
-        $movies = $movieRepository->findAll();
+        $this->repository = $repository;
+    }
+
+    #[Route('/', name: 'movies')]
+    public function index(): Response
+    {
+        $movies = $this->repository->findAll();
 
         return $this->render('movie/index.html.twig', [
-            'movies' => $movies
+            'movies' => $movies,
         ]);
     }
 
-    /**
-     * @Route("/booking", name="booking", methods={"POST"})
-     */
+    #[Route('/movie/{uuid}', name: 'single_movie')]
+    public function singleMovie(string $uuid): Response
+    {
+        $movie = $this->repository->find($uuid);
+
+        return $this->render('movie/single.html.twig', [
+            'movie' => $movie,
+        ]);
+    }
+
+    #[Route('/booking', name: 'booking', methods: 'POST')]
     public function actionBooking(MessageBusInterface $bus, Request $request): Response
     {
         $data = $request->request->all();
-        $client = new ClientDetails($data['name'], $data['phone_number']);
-
-        $bus->dispatch(new Booking($client, $data['session_id']));
+        $bus->dispatch(new BookingCommand($data['name'], $data['phone_number'], $data['session_id']));
 
         return $this->redirectToRoute('movies');
     }
