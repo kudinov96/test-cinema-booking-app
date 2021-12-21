@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Domain\Booking\Command;
+
 use App\Domain\Booking\Entity\Ticket;
 use App\Domain\Booking\Entity\ValueObject\ClientDetails;
 use App\Domain\Booking\Repository\SessionRepository;
@@ -8,7 +9,7 @@ use App\Domain\Booking\Repository\TicketRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class BookingCommandHandler implements MessageHandlerInterface
+class ToBookingCommandHandler implements MessageHandlerInterface
 {
     private SessionRepository $sessionRepository;
     private TicketRepository $ticketRepository;
@@ -21,19 +22,19 @@ class BookingCommandHandler implements MessageHandlerInterface
         $this->validator = $validator;
     }
 
-    public function __invoke(BookingCommand $booking)
+    public function __invoke(ToBookingCommand $toBookingCommand)
     {
-        $this->validation($booking);
+        $this->validation($toBookingCommand);
 
-        $session = $this->sessionRepository->find($booking->getSessionId());
+        $session = $this->sessionRepository->find($toBookingCommand->getSessionId());
         if ($session->getAmountRemainingTickets() <= 0) throw new \Exception('Tickets expired');
 
-        $client = new ClientDetails($booking->getName(), $booking->getPhoneNumber());
+        $client = new ClientDetails($toBookingCommand->getName(), $toBookingCommand->getPhoneNumber());
         $ticket = new Ticket($session, $client);
         $this->ticketRepository->save($ticket);
     }
 
-    public function validation(BookingCommand $booking): void
+    public function validation(ToBookingCommand $booking): void
     {
         $errors = $this->validator->validate($booking);
         if (count($errors) > 0) dd($errors);

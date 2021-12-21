@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Domain\Booking\Command\BookingCommand;
+use App\Domain\Booking\Command\ToBookingCommand;
 use App\Domain\Booking\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,7 +43,7 @@ class MovieController extends AbstractController
     public function actionBooking(MessageBusInterface $bus, Request $request): Response
     {
         $data = $request->request->all();
-        $bus->dispatch(new BookingCommand($data['name'], $data['phone_number'], $data['session_id']));
+        $bus->dispatch(new ToBookingCommand($data['name'], $data['phone_number'], $data['session_id']));
 
         return $this->redirectToRoute('movies');
     }
