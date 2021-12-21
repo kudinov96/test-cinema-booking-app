@@ -9,3 +9,7 @@
 .movie__sessions > li{
     margin-bottom: 10px;
 }
+
+.errors{
+    color: red;
+}

@@ -1,6 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+    <ul class="errors">
+        {% for message in app.flashes('validate') %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+
     <div class="movies">
         {% for movie in movies %}
             <div class="movie">
