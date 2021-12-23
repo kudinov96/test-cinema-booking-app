@@ -2,7 +2,6 @@
 
 namespace App\Domain\Booking\Entity;
 
-use App\Domain\Booking\Repository\MovieRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use App\Domain\Booking\Collection\SessionCollection;
@@ -12,7 +11,7 @@ use Ramsey\Uuid\Uuid;
 use DateInterval;
 
 /**
- * @ORM\Entity(repositoryClass=MovieRepository::class)
+ * @ORM\Entity(repositoryClass=App\Domain\Booking\Repository\MovieRepository::class)
  */
 class Movie
 {
@@ -54,11 +53,6 @@ class Movie
         return $this->id;
     }
 
-    public function getSessions(): Collection
-    {
-        return $this->sessions;
-    }
-
     public function getName(): string
     {
         return $this->name;
@@ -67,5 +61,10 @@ class Movie
     public function getDuration(): DateInterval
     {
         return new DateInterval($this->duration);
+    }
+
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
     }
 }

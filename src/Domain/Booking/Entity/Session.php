@@ -3,7 +3,6 @@
 namespace App\Domain\Booking\Entity;
 
 use App\Domain\Booking\Collection\TicketCollection;
-use App\Domain\Booking\Repository\SessionRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
@@ -12,7 +11,7 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @ORM\Entity(repositoryClass=SessionRepository::class)
+ * @ORM\Entity(repositoryClass=App\Domain\Booking\Repository\SessionRepository::class)
  */
 class Session
 {
@@ -83,11 +82,6 @@ class Session
     public function getDate(): DateTime
     {
         return $this->date;
-    }
-
-    public function getSessionStart(): DateTime
-    {
-        return $this->getDate();
     }
 
     public function getSessionEnd(): DateTime

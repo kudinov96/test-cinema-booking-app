@@ -2,9 +2,7 @@
 
 namespace App\Domain\Booking\Repository;
 
-use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Entity\Ticket;
-use App\Domain\Booking\Entity\ValueObject\ClientDetails;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,7 +19,7 @@ class TicketRepository extends ServiceEntityRepository
         parent::__construct($registry, Ticket::class);
     }
 
-    public function save(Ticket $ticket)
+    public function save(Ticket $ticket): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($ticket);

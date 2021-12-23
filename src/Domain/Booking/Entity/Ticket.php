@@ -10,7 +10,7 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @ORM\Entity(repositoryClass=TicketRepository::class)
+ * @ORM\Entity(repositoryClass=App\Domain\Booking\Repository\TicketRepository::class)
  */
 class Ticket
 {
