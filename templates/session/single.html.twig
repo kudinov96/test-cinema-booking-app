@@ -4,7 +4,7 @@
     {{ session.id }}<br>
     <i>Remaining total tickets:</i> {{ session.getAmountRemainingTickets() }}/{{ session.getTotalTickets }}<br>
     <i>Date:</i> {{ session.date.format('Y-m-d') }}<br>
-    <i>Session time:</i> {{ session.getSessionStart().format('H:i') }} - {{ session.getSessionEnd().format('H:i') }}
+    <i>Session time:</i> {{ session.getDate().format('H:i') }} - {{ session.getSessionEnd().format('H:i') }}
     {% if session.tickets is not empty %}
         <ul>
             {% for ticket in session.tickets %}

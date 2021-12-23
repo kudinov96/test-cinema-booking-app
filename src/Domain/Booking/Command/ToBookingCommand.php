@@ -9,7 +9,7 @@ class ToBookingCommand
     /**
      * @Assert\NotBlank
      */
-    private string $name;
+    private $name;
 
     /**
      * @Assert\NotBlank
@@ -17,7 +17,7 @@ class ToBookingCommand
     private string $phone_number;
 
     /**
-     * @Assert\NotBlank
+     * @Assert\Uuid
      */
     private string $session_id;
 

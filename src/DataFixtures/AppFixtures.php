@@ -18,13 +18,17 @@ class AppFixtures extends Fixture
             $movie = new Movie('Movie ' . $i, 'PT1H30M');
 
             // Create Sessions
-            for ($j = 1; $j <= rand(1, 5); $j++) {
-                $session = new Session($movie, rand(5, 20), new \DateTime('2021-01-22 18:00'));
+            for ($j = 1; $j <= 2; $j++) {
+                $total_tickets = 100;
+                if ($i === 1 && $j === 1) {
+                    $total_tickets = 5;
+                }
+                $session = new Session($movie, $total_tickets, new \DateTime('2021-01-22 18:00'));
                 $manager->persist($session);
 
                 // Create Tickets
-                for ($k = 1; $k < rand(1, 10); $k++) {
-                    $ticket = new Ticket($session, new ClientDetails('Ivan' . $k, rand(1000000, 9999999)));
+                for ($k = 1; $k <= 5; $k++) {
+                    $ticket = new Ticket($session, new ClientDetails('Ivan' . $k, 79991234567));
                     $manager->persist($ticket);
                 }
             }
