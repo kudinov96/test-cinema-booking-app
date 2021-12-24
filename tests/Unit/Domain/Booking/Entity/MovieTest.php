@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Domain\Booking\Entity;
+namespace App\Tests\Unit\Domain\Booking\Entity;
 
 use App\Domain\Booking\Collection\SessionCollection;
 use App\Domain\Booking\Entity\Movie;
@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 class MovieTest extends TestCase
 {
+    private Movie $movie;
+
     public function setUp(): void
     {
         $this->movie = new Movie('Movie 1', 'PT1H30M');

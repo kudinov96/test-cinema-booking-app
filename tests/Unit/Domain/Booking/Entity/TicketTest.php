@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Domain\Booking\Entity;
+namespace App\Tests\Unit\Domain\Booking\Entity;
 
 use App\Domain\Booking\Entity\Movie;
 use App\Domain\Booking\Entity\Session;
@@ -10,6 +10,11 @@ use PHPUnit\Framework\TestCase;
 
 class TicketTest extends TestCase
 {
+    private Movie $movie;
+    private Session $session;
+    private ClientDetails $client;
+    private Ticket $ticket;
+
     public function setUp(): void
     {
         $this->movie = new Movie('Movie 1', 'PT1H30M');
