@@ -1,25 +1,27 @@
 <?php
 
-namespace App\Tests\Domain\Booking\Command;
+namespace App\Tests\Functional\Domain\Booking\Command;
 
 use App\Domain\Booking\Command\ToBookingCommand;
 use App\Domain\Booking\Entity\Movie;
 use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Entity\Ticket;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Tests\Functional\FunctionalTestCase;
+use Doctrine\Persistence\ObjectRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class ToBookingCommandHandlerTest extends KernelTestCase
+class ToBookingCommandHandlerTest extends FunctionalTestCase
 {
+    private $bus;
+    private ObjectRepository $movieRepository;
+    private ObjectRepository $sessionRepository;
+    private ObjectRepository $ticketRepository;
+
     public function setUp(): void
     {
-        self::bootKernel();
-        $container = static::getContainer();
+        parent::setUp();
 
-        $this->entityManager = $container->get(ManagerRegistry::class)->getManager();
-        $this->bus = $container->get(MessageBusInterface::class);
-
+        $this->bus = $this->container->get(MessageBusInterface::class);
         $this->movieRepository = $this->entityManager->getRepository(Movie::class);
         $this->sessionRepository = $this->entityManager->getRepository(Session::class);
         $this->ticketRepository = $this->entityManager->getRepository(Ticket::class);

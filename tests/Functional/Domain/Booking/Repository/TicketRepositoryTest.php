@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Tests\Domain\Booking\Repository;
+namespace App\Tests\Functional\Domain\Booking\Repository;
 
 use App\Domain\Booking\Entity\Movie;
 use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Entity\Ticket;
 use App\Domain\Booking\Entity\ValueObject\ClientDetails;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Tests\Functional\FunctionalTestCase;
+use Doctrine\Persistence\ObjectRepository;
 
-class TicketRepositoryTest extends KernelTestCase
+class TicketRepositoryTest extends FunctionalTestCase
 {
+    private ObjectRepository $ticketRepository;
+    private Ticket $ticket;
+
     public function setUp(): void
     {
-        self::bootKernel();
-        $container = static::getContainer();
+        parent::setUp();
 
-        $this->entityManager = $container->get(ManagerRegistry::class)->getManager();
         $this->ticketRepository = $this->entityManager->getRepository(Ticket::class);
 
         $movieRepository = $this->entityManager->getRepository(Movie::class);
