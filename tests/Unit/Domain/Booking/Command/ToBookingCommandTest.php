@@ -5,7 +5,7 @@ namespace App\Tests\Unit\Domain\Booking\Command;
 use App\Domain\Booking\Command\ToBookingCommand;
 use PHPUnit\Framework\TestCase;
 
-class TicketRepositoryTest extends TestCase
+class ToBookingCommandTest extends TestCase
 {
     private ToBookingCommand $toBookingCommand;
 
