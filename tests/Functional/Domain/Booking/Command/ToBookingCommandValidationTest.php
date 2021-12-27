@@ -6,7 +6,7 @@ use App\Domain\Booking\Command\ToBookingCommand;
 use App\Tests\Functional\FunctionalTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ToBookingCommandTest extends FunctionalTestCase
+class ToBookingCommandValidationTest extends FunctionalTestCase
 {
     private $validator;
 
